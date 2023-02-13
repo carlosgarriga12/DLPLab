@@ -16,10 +16,4 @@ public interface PmmVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitProgram(PmmParser.ProgramContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link PmmParser#mantissa}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMantissa(PmmParser.MantissaContext ctx);
 }

@@ -1,6 +1,9 @@
 grammar Pmm;	
 
-program: CHAR_CONSTANT
+program: INT_CONSTANT
+        | CHAR_CONSTANT
+        | REAL_CONSTANT
+        | ID
        ;
   		 
 INT_CONSTANT: '0'
@@ -9,17 +12,37 @@ INT_CONSTANT: '0'
 
 CHAR_CONSTANT: '\'' . '\''
             | '\'' '\\' INT_CONSTANT '\''
-            | '\'' '\\' 'n' '\''
-            | '\'' '\\' 't' '\''
+            | '\'' '\\' [nt] '\''
             ;
 
-REAL_CONSTANT: INT_CONSTANT '.' INT_CONSTANT
+REAL_CONSTANT: FLOATING_POINT
+             | MANTISSA
+             ;
+
+fragment FLOATING_POINT: INT_CONSTANT '.' INT_CONSTANT
             | INT_CONSTANT '.'
             | '.' INT_CONSTANT
             ;
 
-mantissa:
+fragment MANTISSA: (FLOATING_POINT | INT_CONSTANT) ('e'|'E') ('-')? INT_CONSTANT
         ;
 
-TRASH: [\n\r\t] -> skip
+fragment LETTER: [a-z] | [A-Z]
+        ;
+
+fragment DIGIT: [0-9]
+        ;
+
+fragment THREE_APOSTROPHE: '"""'
+                        ;
+ID: (LETTER |'_') (LETTER | DIGIT| '_')*
+        ;
+
+ONE_LINE_COMMENT: '#' ~('\n')*? ('\n'| EOF) -> skip
+                ;
+
+MULTILINE_COMMENT: THREE_APOSTROPHE (.)*? THREE_APOSTROPHE -> skip
+                ;
+
+TRASH: [\n\r\t ]+ -> skip
     ;
