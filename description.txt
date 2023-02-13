@@ -1,0 +1,12 @@
+Case sensitive lexical tokens:
+  One-line comments starting with # 
+  Multiple-line comments starting with """ and ending with """
+  Identifiers starting with a letter or _ and followed by letter, digit or _
+  Integer constants without sign  
+  Real constants with floating point
+	12.3, 2., .34
+  Real constants with mantissa and exponent
+	34.12E-3, 3e3	
+  Char constants between ' and '
+  Char constants identifying the ASCII code, e.g. '\126'
+  The two special char constants '\n' and '\t'
