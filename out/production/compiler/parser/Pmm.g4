@@ -13,20 +13,13 @@ CHAR_CONSTANT: '\'' . '\''
             | '\'' '\\' 't' '\''
             ;
 
-REAL_CONSTANT: FLOATING_POINT
-             | MANTISSA
-             ;
-
-fragment FLOATING_POINT: INT_CONSTANT '.' INT_CONSTANT
+REAL_CONSTANT: INT_CONSTANT '.' INT_CONSTANT
             | INT_CONSTANT '.'
             | '.' INT_CONSTANT
             ;
 
-fragment MANTISSA: (FLOATING_POINT | INT_CONSTANT) ('e'|'E') ('-')? INT_CONSTANT
+mantissa:
         ;
 
-ONE_LINE_COMMENT: '#' ~('\n')* '\n'
-                ;
-
-TRASH: [\n\r\t ] -> skip
+TRASH: [\n\r\t] -> skip
     ;
