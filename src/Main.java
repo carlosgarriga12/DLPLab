@@ -20,7 +20,7 @@ public class Main {
 		Token token;
 		while ((token = lexer.nextToken()).getType() != PmmLexer.EOF) {
 			// We get the semantic value of the token
-			Object semanticValue = null;
+			Object semanticValue;
 			switch (token.getType()) {			
 				case PmmLexer.CHAR_CONSTANT:
 					semanticValue = LexerHelper.lexemeToChar(token.getText());

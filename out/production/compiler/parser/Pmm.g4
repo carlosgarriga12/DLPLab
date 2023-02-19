@@ -24,7 +24,7 @@ fragment FLOATING_POINT: INT_CONSTANT '.' INT_CONSTANT
             | '.' INT_CONSTANT
             ;
 
-fragment MANTISSA: (FLOATING_POINT | INT_CONSTANT) ('e'|'E') ('-')? INT_CONSTANT
+fragment MANTISSA: (FLOATING_POINT | INT_CONSTANT) ('e'|'E') [+-]? INT_CONSTANT
         ;
 
 fragment LETTER: [a-z] | [A-Z]
