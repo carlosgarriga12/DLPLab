@@ -1,1 +1,2 @@
-Using ANTLR, create one lexer for the Pmm language described in description.txt.
+Implement a syntax recognizer using ANLTR. 
+The language is described in description.txt (lab01), and an example program is provided in input.txt.
