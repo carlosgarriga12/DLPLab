@@ -1,6 +1,11 @@
-import parser.*;
+import ast.ASTNode;
 
 import org.antlr.v4.runtime.*;
+
+import introspector.model.IntrospectorModel;
+import introspector.view.IntrospectorView;
+import parser.PmmLexer;
+import parser.PmmParser;
 
 public class Main {
 	
@@ -16,7 +21,11 @@ public class Main {
 
 		// create a parser that feeds off the tokens buffer
 		CommonTokenStream tokens = new CommonTokenStream(lexer); 
-		PmmParser parser = new PmmParser(tokens);	
-		parser.program();		
+		PmmParser parser = new PmmParser(tokens);
+		ASTNode ast = parser.program().ast;
+		
+		// * The AST is shown
+		IntrospectorModel model=new IntrospectorModel("Program", ast);
+		new IntrospectorView("Introspector", model);
 	}
 }

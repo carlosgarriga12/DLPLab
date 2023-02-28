@@ -8,4 +8,9 @@ public class Not extends AbstractExpression{
         super(line, column);
         this.expression = expression;
     }
+
+    @Override
+    public String toString() {
+        return "!" + expression.toString();
+    }
 }

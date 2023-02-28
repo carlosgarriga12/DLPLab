@@ -1,5 +1,13 @@
 // Generated from java-escape by ANTLR 4.11.1
 package parser;
+
+    import ast.definition.*;
+    import ast.expression.*;
+    import ast.statement.*;
+    import ast.type.*;
+    import parser.LexerHelper;
+    import ast.*;
+
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -41,6 +49,12 @@ public interface PmmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFunctionDefinition(PmmParser.FunctionDefinitionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link PmmParser#parameters}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParameters(PmmParser.ParametersContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link PmmParser#parameter}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -59,11 +73,17 @@ public interface PmmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitType(PmmParser.TypeContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PmmParser#structField}.
+	 * Visit a parse tree produced by {@link PmmParser#recordFields}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitStructField(PmmParser.StructFieldContext ctx);
+	T visitRecordFields(PmmParser.RecordFieldsContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PmmParser#recordField}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRecordField(PmmParser.RecordFieldContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PmmParser#expression}.
 	 * @param ctx the parse tree
@@ -82,4 +102,10 @@ public interface PmmVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitBody(PmmParser.BodyContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PmmParser#expressions}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpressions(PmmParser.ExpressionsContext ctx);
 }

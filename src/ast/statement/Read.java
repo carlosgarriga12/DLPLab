@@ -3,11 +3,21 @@ package ast.statement;
 import ast.AbstractASTNode;
 import ast.expression.Expression;
 
-public class Read extends AbstractASTNode implements Statement {
-    public Expression expression;
+import java.util.ArrayList;
+import java.util.List;
 
-    public Read(int line, int column, Expression expression) {
+public class Read extends AbstractASTNode implements Statement {
+    public List<Expression> expressions;
+
+    public Read(int line, int column, List<Expression> expressions) {
         super(line, column);
-        this.expression = expression;
+        this.expressions = new ArrayList<>( expressions );
+    }
+
+    @Override
+    public String toString() {
+        return "Read{" +
+                "expressions=" + expressions +
+                '}';
     }
 }

@@ -13,6 +13,15 @@ public class FunctionInvocation extends AbstractExpression implements Statement{
         super(line, column);
         this.variable = variable;
         this.arguments = new ArrayList<>( arguments );
+    }
 
+    @Override
+    public String toString() {
+        String aux="";
+
+        for(Expression expression : arguments) {
+            aux+= expression.toString() + ",";
+        }
+        return variable.toString() + "(" + aux + ")";
     }
 }

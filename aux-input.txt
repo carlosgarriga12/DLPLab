@@ -1,0 +1,4 @@
+# Main function definition
+def main(): {
+	pair.integer = 0;
+}

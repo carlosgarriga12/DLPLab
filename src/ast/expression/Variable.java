@@ -7,4 +7,9 @@ public class Variable extends AbstractExpression{
         super(line, column);
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

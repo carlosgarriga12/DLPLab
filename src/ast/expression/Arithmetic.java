@@ -11,4 +11,9 @@ public class Arithmetic extends AbstractExpression{
         this.rightExpression = rightExpression;
         this.operator = operator;
     }
+
+    @Override
+    public String toString() {
+        return leftExpression.toString() + " " + operator + " " + rightExpression.toString();
+    }
 }

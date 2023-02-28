@@ -1,5 +1,13 @@
 // Generated from java-escape by ANTLR 4.11.1
 package parser;
+
+    import ast.definition.*;
+    import ast.expression.*;
+    import ast.statement.*;
+    import ast.type.*;
+    import parser.LexerHelper;
+    import ast.*;
+
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**
@@ -53,6 +61,13 @@ public class PmmBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Pm
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitParameters(PmmParser.ParametersContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitParameter(PmmParser.ParameterContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -74,7 +89,14 @@ public class PmmBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Pm
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitStructField(PmmParser.StructFieldContext ctx) { return visitChildren(ctx); }
+	@Override public T visitRecordFields(PmmParser.RecordFieldsContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitRecordField(PmmParser.RecordFieldContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -96,4 +118,11 @@ public class PmmBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Pm
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitBody(PmmParser.BodyContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitExpressions(PmmParser.ExpressionsContext ctx) { return visitChildren(ctx); }
 }

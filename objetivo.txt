@@ -1,2 +1,4 @@
-Implementar un analizador sintáctico mediante ANTLR. 
-El lenguaje esta descrito en el fichero descripcion.txt (lab01), y se dispone de un ejemplo en input.txt. 
+1. Toma la implementación del AST (lab 02)
+2. Toma el analizador sintáctico (lab 04)
+3. Incluyendo código embebido en la gramática de ANTLR, implementa un parser para crear ASTs.
+4. Verifica su correcto funcionamiento mediante Introspector

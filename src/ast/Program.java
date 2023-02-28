@@ -1,13 +1,12 @@
-package ast.program;
+package ast;
 
-import ast.AbstractASTNode;
 import ast.definition.Definition;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Program extends AbstractASTNode {
-    List<Definition> definitions;
+    public List<Definition> definitions;
 
     public Program(int line, int column, List<Definition> definitions) {
         super(line, column);
