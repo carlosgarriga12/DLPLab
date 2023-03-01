@@ -37,7 +37,8 @@ definition returns [List<Definition> ast = new ArrayList<>()]:
             | functionDefinition {$ast.add($functionDefinition.ast); })
         ;
 
-varDefinition returns [List<VariableDefinition> ast = new ArrayList<>()] locals [List<Token> aux = new ArrayList<>()]:
+varDefinition returns [List<VariableDefinition> ast = new ArrayList<>()]
+              locals [List<Token> aux = new ArrayList<>()]:
         ID { $aux.add($ID);}
         (',' ID { $aux.add($ID);} )* ':' type ';'
         //
@@ -95,10 +96,10 @@ built_in_type returns [Type ast]:
 
 type returns [Type ast]:
     built_in_type                   {$ast = $built_in_type.ast;}
-    | START='[' INT_CONSTANT ']' type     {$ast = new ArrayType(
+    | START='[' INT_CONSTANT ']' t=type     {$ast = new ArrayType(
                                                         $START.getLine(),
                                                         $START.getCharPositionInLine() + 1,
-                                                        $type.ast,
+                                                        $t.ast,
                                                         LexerHelper.lexemeToInt($INT_CONSTANT.text)
                                                      );}
     | START = 'struct' '{' recordFields '}'     {$ast = new RecordType(
@@ -108,17 +109,16 @@ type returns [Type ast]:
                                                         );}
     ;
 
-recordFields returns [List<RecordField> ast = new ArrayList<>()]:
-    (recordField { $ast.add($recordField.ast); } )+
-    ;
-
-recordField returns [RecordField ast]:
-        ID ':' type ';' {$ast = new RecordField(
-                                        $ID.getLine(),
-                                        $ID.getCharPositionInLine() + 1,
-                                        $type.ast,
-                                        $ID.text
-                                   );}
+recordFields returns [List<RecordField> ast = new ArrayList<>()] locals [List<Token> aux = new ArrayList<>()]:
+        ID { $aux.add($ID);}
+                (',' ID { $aux.add($ID);} )* ':' type ';'
+                //
+                {$aux.forEach(token -> $ast.add(new RecordField(
+                        token.getLine(),
+                        token.getCharPositionInLine() + 1,
+                        $type.ast,
+                        token.getText()
+                )));}
         ;
 
 //Expressions
@@ -172,8 +172,8 @@ expression returns [Expression ast]:
         );}
 
         //Parenthesis
-        | '(' expression ')'
-        {$ast = $expression.ast; }
+        | '(' exp1=expression ')'
+        {$ast = $exp1.ast; }
 
         //ArrayAccess
         | exp1=expression '[' exp2=expression ']'
@@ -194,28 +194,28 @@ expression returns [Expression ast]:
          );}
 
         //Cast
-        | START='(' built_in_type ')' expression
+        | START='(' b=built_in_type ')' exp1=expression
         {$ast = new Cast(
             $START.getLine(),
             $START.getCharPositionInLine() + 1,
-            $built_in_type.ast,
-            $expression.ast
+            $b.ast,
+            $exp1.ast
          );}
 
         //UnaryMinus
-        | '-' expression
+        | '-' exp1=expression
         {$ast = new UnaryMinus(
-            $expression.ast.getLine(),
-            $expression.ast.getColumn(),
-            $expression.ast
+            $exp1.ast.getLine(),
+            $exp1.ast.getColumn(),
+            $exp1.ast
         );}
 
         //Not
-        | '!' expression
+        | '!' exp1=expression
         {$ast = new Not(
-                $expression.ast.getLine(),
-                $expression.ast.getColumn(),
-                $expression.ast
+                $exp1.ast.getLine(),
+                $exp1.ast.getColumn(),
+                $exp1.ast
               );}
 
         //Arithmetic
@@ -239,7 +239,7 @@ expression returns [Expression ast]:
 
         //Logical
         | exp1=expression OP=('<' | '<=' | '==' |'>=' | '>' | '!=') exp2=expression
-        {$ast = new Logical(
+        {$ast = new Comparison(
                  $exp1.ast.getLine(),
                  $exp1.ast.getColumn(),
                  $exp1.ast,
@@ -260,26 +260,26 @@ expression returns [Expression ast]:
 //Statements
 statement returns [Statement ast]:
          //While
-         START='while' expression ':' body            {$ast = new While(
+         START='while' exp=expression ':' body            {$ast = new While(
                                                                 $START.getLine(),
                                                                 $START.getCharPositionInLine() + 1,
-                                                                $expression.ast,
+                                                                $exp.ast,
                                                                 $body.ast
                                                               );}
 
         //IfElse
-        | START='if' expression ':' body              {$ast = new IfElse(
+        | START='if' exp=expression ':' body              {$ast = new IfElse(
                                                                 $START.getLine(),
                                                                 $START.getCharPositionInLine() + 1,
-                                                                $expression.ast,
+                                                                $exp.ast,
                                                                 $body.ast,
                                                                 new ArrayList<Statement>()
                                                               );}
 
-        | START='if' expression ':' ifStmts=body 'else' ':' elseStmts=body     {$ast = new IfElse(
+        | START='if' exp=expression ':' ifStmts=body 'else' ':' elseStmts=body     {$ast = new IfElse(
                                                                                     $START.getLine(),
                                                                                     $START.getCharPositionInLine() + 1,
-                                                                                    $expression.ast,
+                                                                                    $exp.ast,
                                                                                     $ifStmts.ast,
                                                                                     $elseStmts.ast
                                                                                   );}
@@ -331,8 +331,8 @@ statement returns [Statement ast]:
         ;
 
 body returns [List<Statement> ast = new ArrayList<>()]:
-              statement {$ast.add($statement.ast);}
-        | '{' (statement {$ast.add($statement.ast);} )* '}'
+              st1=statement {$ast.add($st1.ast);}
+        | '{' (st2=statement {$ast.add($st2.ast);} )* '}'
         ;
 
 expressions returns[List<Expression> ast = new ArrayList<>()]:

@@ -2,7 +2,6 @@
 	Control Test
 	PLD 19/20
 """
-
 # Global variables
 integer:int;
 character:char;
@@ -87,4 +86,5 @@ def main(): { # Uncomment to test
 
 	#error:int; # Uncomment to test
 }
+
 # def no_function(): {} # Uncomment to test
