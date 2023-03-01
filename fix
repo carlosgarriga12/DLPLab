@@ -1,3 +1,4 @@
 Comparison and logical
 Assign a name to expressions section in Pmm.g4
 RecordField must implement ASTNode
+Creating fields inside structs like variable definitions a,b,c: int
