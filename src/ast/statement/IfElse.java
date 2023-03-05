@@ -16,6 +16,7 @@ public class IfElse extends AbstractASTNode implements Statement {
         super(line, column);
         this.ifStatements = new ArrayList<>( ifStatements );
         this.elseStatements = new ArrayList<>( elseStatements );
+        this.expression = expression;
     }
 
     @Override
