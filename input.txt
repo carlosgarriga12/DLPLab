@@ -23,6 +23,8 @@ def main(): {
   	pair: struct {
     	integer: int;
     	character: char;
+
+    	a,b,c:int;
   	};
   	
   	# Array

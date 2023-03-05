@@ -94,7 +94,7 @@ built_in_type returns [Type ast]:
             | 'double'  {$ast = RealType.getInstance();}
             ;
 
-type returns [Type ast]:
+type returns [Type ast] locals [List<RecordField> recordFields = new ArrayList<>()]:
     built_in_type                   {$ast = $built_in_type.ast;}
     | START='[' INT_CONSTANT ']' t=type     {$ast = new ArrayType(
                                                         $START.getLine(),
@@ -102,14 +102,19 @@ type returns [Type ast]:
                                                         $t.ast,
                                                         LexerHelper.lexemeToInt($INT_CONSTANT.text)
                                                      );}
-    | START = 'struct' '{' recordFields '}'     {$ast = new RecordType(
-                                                            $START.getLine(),
-                                                            $START.getCharPositionInLine() + 1,
-                                                            $recordFields.ast
-                                                        );}
+
+    |
+        START = 'struct' '{' (r=recordField {$recordFields.addAll($r.ast); } )* '}'
+
+         {$ast = new RecordType(
+                $START.getLine(),
+                $START.getCharPositionInLine() + 1,
+                $recordFields
+            );}
     ;
 
-recordFields returns [List<RecordField> ast = new ArrayList<>()] locals [List<Token> aux = new ArrayList<>()]:
+recordField returns [List<RecordField> ast = new ArrayList<>()]
+            locals [List<Token> aux = new ArrayList<>()]:
         ID { $aux.add($ID);}
                 (',' ID { $aux.add($ID);} )* ':' type ';'
                 //
@@ -154,15 +159,7 @@ expression returns [Expression ast]:
                          $ID.text),
             $expressions.ast
         );}
-        | ID '(' ')'
-        {$ast = new FunctionInvocation(
-            $ID.getLine(),
-            $ID.getCharPositionInLine() + 1,
-            new Variable($ID.getLine(),
-                         $ID.getCharPositionInLine() + 1,
-                         $ID.text),
-            new ArrayList<>()
-        );}
+
         //Variable
         | ID
         {$ast = new Variable(
@@ -268,20 +265,15 @@ statement returns [Statement ast]:
                                                               );}
 
         //IfElse
-        | START='if' exp=expression ':' body              {$ast = new IfElse(
-                                                                $START.getLine(),
-                                                                $START.getCharPositionInLine() + 1,
-                                                                $exp.ast,
-                                                                $body.ast,
-                                                                new ArrayList<Statement>()
-                                                              );}
+        |   {List<Statement> elseStatements = new ArrayList<>();}
+            START='if' exp=expression ':' ifStmts=body ('else' ':' elseStmts=body {elseStatements = $elseStmts.ast;})?
 
-        | START='if' exp=expression ':' ifStmts=body 'else' ':' elseStmts=body     {$ast = new IfElse(
+                                                                                {$ast = new IfElse(
                                                                                     $START.getLine(),
                                                                                     $START.getCharPositionInLine() + 1,
                                                                                     $exp.ast,
                                                                                     $ifStmts.ast,
-                                                                                    $elseStmts.ast
+                                                                                    elseStatements
                                                                                   );}
         //Assignment
         | exp1=expression '=' exp2=expression ';'         {$ast = new Assignment(
@@ -319,15 +311,6 @@ statement returns [Statement ast]:
                                                                             $ID.text),
                                                                     $expressions.ast
                                                               );}
-        | ID '(' ')' ';'                            {$ast = new FunctionInvocation(
-                                                                    $ID.getLine(),
-                                                                    $ID.getCharPositionInLine() + 1,
-                                                                    new Variable(
-                                                                            $ID.getLine(),
-                                                                            $ID.getCharPositionInLine() + 1,
-                                                                            $ID.text),
-                                                                    new ArrayList<>()
-                                                              );}
         ;
 
 body returns [List<Statement> ast = new ArrayList<>()]:
@@ -336,7 +319,7 @@ body returns [List<Statement> ast = new ArrayList<>()]:
         ;
 
 expressions returns[List<Expression> ast = new ArrayList<>()]:
-        ( exp1=expression {$ast.add($exp1.ast); } (',' exp2=expression {$ast.add($exp2.ast);} )* )
+        ( exp1=expression {$ast.add($exp1.ast); } (',' exp2=expression {$ast.add($exp2.ast);} )* | /* Epsilon */{$ast = $ast;} )
         ;
 
 //------------- Lexer -----------------
