@@ -7,6 +7,7 @@ package parser;
     import ast.type.*;
     import parser.LexerHelper;
     import ast.*;
+    import java.util.stream.Collectors;
 
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
