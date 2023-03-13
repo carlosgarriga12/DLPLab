@@ -18,11 +18,13 @@ public class AbstractVisitor<TP, TR> implements Visitor <TP,TR>{
     @Override
     public TR visit(FunctionDefinition functionDefinition, TP param) {
         functionDefinition.statements.forEach(stmt -> stmt.accept(this, null));
+        functionDefinition.getType().accept(this, null);
         return null;
     }
 
     @Override
     public TR visit(VariableDefinition variableDefinition, TP param) {
+        variableDefinition.getType().accept(this, null);
         return null;
     }
 
@@ -67,6 +69,7 @@ public class AbstractVisitor<TP, TR> implements Visitor <TP,TR>{
     @Override
     public TR visit(FunctionInvocation functionInvocation, TP param) {
         functionInvocation.arguments.forEach(exp -> exp.accept(this, null));
+        functionInvocation.variable.accept(this, null);
         return null;
     }
 
@@ -113,9 +116,9 @@ public class AbstractVisitor<TP, TR> implements Visitor <TP,TR>{
 
     @Override
     public TR visit(IfElse ifElse, TP param) {
+        ifElse.expression.accept(this, null);
         ifElse.ifStatements.forEach(stmt -> stmt.accept(this, null));
         ifElse.elseStatements.forEach(stmt -> stmt.accept(this, null));
-        ifElse.expression.accept(this, null);
         return null;
     }
 

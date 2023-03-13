@@ -40,16 +40,8 @@ definition returns [List<Definition> ast = new ArrayList<>()]:
 
 varDefinition returns [List<VariableDefinition> ast = new ArrayList<>()]
               locals [List<Token> aux = new ArrayList<>()]:
-        ID { $aux.add($ID);}
-        (',' ID { $aux.add($ID); if ($aux.contains($ID)) {
-             ErrorType error = new ErrorType
-             (
-                 $ID.getLine(),
-                 $ID.getCharPositionInLine() + 1,
-                 "Repeated variable definition " + $ID.text
-             );
-
-         } } )* ':' type ';'
+        ID1=ID { $aux.add($ID1);}
+        (',' ID2=ID { $aux.add($ID2);} )* ':' type ';'
         //
         {$aux.forEach(token -> $ast.add(new VariableDefinition(
                 token.getLine(),
@@ -58,6 +50,20 @@ varDefinition returns [List<VariableDefinition> ast = new ArrayList<>()]
                 token.getText()
         )));}
 
+        {
+                for(int i = 0; i < $aux.size() - 1; i++) {
+                    VariableDefinition varDef = $ast.get(i);
+                    for(int j = i + 1; j < $aux.size(); j++) {
+                        if (varDef.getName().equals($ast.get(j).getName())) {
+                            new ErrorType(
+                                $ast.get(j).getLine(),
+                                $ast.get(j).getColumn(),
+                                "Repeated variable definition " + $ast.get(j).getName()
+                            );
+                        }
+                    }
+                }
+        }
         ;
 
 functionDefinition returns[Definition ast] locals [List<Statement> statements = new ArrayList<>()]:

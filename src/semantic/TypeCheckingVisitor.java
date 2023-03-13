@@ -105,7 +105,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
             new ErrorType(
                     assignment.leftExpression.getLine(),
                     assignment.leftExpression.getColumn(),
-                    "The expresssion on the left part of the assignment is not lValue"
+                    "The expression on the left part of the assignment is not lValue"
             );
         }
         return null;
