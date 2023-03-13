@@ -7,6 +7,7 @@ grammar Pmm;
     import ast.type.*;
     import parser.LexerHelper;
     import ast.*;
+    import java.util.stream.Collectors;
 }
 
 program returns [Program ast]
@@ -40,7 +41,15 @@ definition returns [List<Definition> ast = new ArrayList<>()]:
 varDefinition returns [List<VariableDefinition> ast = new ArrayList<>()]
               locals [List<Token> aux = new ArrayList<>()]:
         ID { $aux.add($ID);}
-        (',' ID { $aux.add($ID);} )* ':' type ';'
+        (',' ID { $aux.add($ID); if ($aux.contains($ID)) {
+             ErrorType error = new ErrorType
+             (
+                 $ID.getLine(),
+                 $ID.getCharPositionInLine() + 1,
+                 "Repeated variable definition " + $ID.text
+             );
+
+         } } )* ':' type ';'
         //
         {$aux.forEach(token -> $ast.add(new VariableDefinition(
                 token.getLine(),
@@ -48,6 +57,7 @@ varDefinition returns [List<VariableDefinition> ast = new ArrayList<>()]
                 $type.ast,
                 token.getText()
         )));}
+
         ;
 
 functionDefinition returns[Definition ast] locals [List<Statement> statements = new ArrayList<>()]:
@@ -105,6 +115,21 @@ type returns [Type ast] locals [List<RecordField> recordFields = new ArrayList<>
 
     |
         START = 'struct' '{' (r=recordField {$recordFields.addAll($r.ast); } )* '}'
+            {
+                for(int i = 0; i < $recordFields.size() - 1 ; i++) {
+                    RecordField r = $recordFields.get(i);
+                    for (int j = i + 1; j < $recordFields.size(); j++) {
+                        if(r.name.equals($recordFields.get(j).name)) {
+                            ErrorType error = new ErrorType
+                            (
+                                $recordFields.get(j).getLine(),
+                                $recordFields.get(j).getColumn(),
+                                "Repeated field " + $recordFields.get(j).name + " for struct"
+                            );
+                        }
+                    }
+                }
+            }
 
          {$ast = new RecordType(
                 $START.getLine(),
@@ -124,6 +149,7 @@ recordField returns [List<RecordField> ast = new ArrayList<>()]
                         $type.ast,
                         token.getText()
                 )));}
+
         ;
 
 //Expressions
