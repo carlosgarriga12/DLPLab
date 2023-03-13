@@ -1,5 +1,7 @@
 package ast.expression;
 
+import visitor.Visitor;
+
 public class Arithmetic extends AbstractExpression{
     public Expression leftExpression;
     public Expression rightExpression;
@@ -15,5 +17,10 @@ public class Arithmetic extends AbstractExpression{
     @Override
     public String toString() {
         return leftExpression.toString() + " " + operator + " " + rightExpression.toString();
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
+        return v.visit(this, null);
     }
 }

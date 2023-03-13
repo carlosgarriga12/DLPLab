@@ -2,6 +2,7 @@ package ast.statement;
 
 import ast.AbstractASTNode;
 import ast.expression.Expression;
+import visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,5 +20,10 @@ public class Print extends AbstractASTNode implements Statement {
         return "Print{" +
                 "expressions=" + expressions +
                 '}';
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
+        return v.visit(this, null);
     }
 }

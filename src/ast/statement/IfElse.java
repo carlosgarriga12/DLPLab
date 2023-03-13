@@ -2,6 +2,7 @@ package ast.statement;
 
 import ast.AbstractASTNode;
 import ast.expression.Expression;
+import visitor.Visitor;
 
 import javax.swing.plaf.nimbus.State;
 import java.util.ArrayList;
@@ -26,5 +27,10 @@ public class IfElse extends AbstractASTNode implements Statement {
                 ", elseStatements=" + elseStatements +
                 ", expression=" + expression +
                 '}';
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
+        return v.visit(this, null);
     }
 }

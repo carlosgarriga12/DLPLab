@@ -2,6 +2,7 @@ package ast.statement;
 
 import ast.AbstractASTNode;
 import ast.expression.Expression;
+import visitor.Visitor;
 
 public class Assignment extends AbstractASTNode implements Statement{
     public Expression leftExpression;
@@ -19,5 +20,10 @@ public class Assignment extends AbstractASTNode implements Statement{
                 "leftExpression=" + leftExpression +
                 ", rightExpression=" + rightExpression +
                 '}';
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
+        return v.visit(this, null);
     }
 }
