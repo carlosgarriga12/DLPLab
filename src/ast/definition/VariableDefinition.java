@@ -15,4 +15,5 @@ public class VariableDefinition extends AbstractDefinition implements Statement 
     public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
         return v.visit(this, null);
     }
+
 }

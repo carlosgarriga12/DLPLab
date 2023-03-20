@@ -1,4 +1,6 @@
-1. Toma la implementación del AST (lab 02)
-2. Toma el analizador sintáctico (lab 04)
-3. Incluyendo código embebido en la gramática de ANTLR, implementa un parser para crear ASTs.
-4. Verifica su correcto funcionamiento mediante Introspector
+Implementar la fase de identificacion la la fase de analisis semantico.
+Completar la Tabla de Simbolos (SymbolTable.java) verificar su funcionamiento mediante SymbolTableTest.java. 
+Completar la fase de identificacion mediante el patron visitor.
+Verificar que la implmenetacion es correcto mediante input.txt y el introspector. 
+Finalmente, verificar que se detectan los 4 arrores del programa wrong.input.txt.
+

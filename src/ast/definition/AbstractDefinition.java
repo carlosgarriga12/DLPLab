@@ -6,6 +6,7 @@ import ast.type.Type;
 public abstract class AbstractDefinition extends AbstractASTNode implements Definition {
     protected Type type;
     protected String name;
+    protected int scope;
 
     @Override
     public Type getType() {
@@ -22,6 +23,16 @@ public abstract class AbstractDefinition extends AbstractASTNode implements Defi
         this.type = type;
         this.name = name;
 
+    }
+
+    @Override
+    public int getScope() {
+        return this.scope;
+    }
+
+    @Override
+    public void setScope(int scope) {
+        this.scope = scope;
     }
 
 }

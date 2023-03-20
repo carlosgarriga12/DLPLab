@@ -1,1 +1,6 @@
-Traverse the AST with the visitor design pattern, annotating the lvalue attribute for expressions. The compiler must accept input.txt and prompt the appropriate error messages for input.wrong.1.txt and input.wrong.2.txt.
+Implement the identification pass of the semantic analysis phase.
+Complete SymbolTable.java to make SymbolTableTest.java succeed.
+Then, implement the identification pass.
+Check the correct implementation showing input.txt with the introspector.
+The 4 error messages in input-wrong.txt must be prompted by the compiler.
+
