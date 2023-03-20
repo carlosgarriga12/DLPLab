@@ -17,7 +17,6 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
     public Void visit(VariableDefinition variableDefinition, Void param) {
         super.visit(variableDefinition, param);
         st.insert(variableDefinition);
-
         return null;
     }
 
