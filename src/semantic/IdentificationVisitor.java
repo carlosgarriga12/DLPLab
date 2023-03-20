@@ -66,5 +66,4 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
         st.reset();
         return null;
     }
-
 }
