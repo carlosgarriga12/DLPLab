@@ -2,6 +2,8 @@ package symboltable;
 
 import java.util.*;
 import ast.definition.Definition;
+import ast.definition.VariableDefinition;
+import ast.expression.Variable;
 import ast.type.ErrorType;
 
 
@@ -31,7 +33,19 @@ public class SymbolTable {
 			definition.setScope(scope);
 			return true;
 		} else {
-			new ErrorType(definition.getLine(), definition.getColumn(), "Repeated definition");
+			if (definition instanceof VariableDefinition) {
+				new ErrorType(
+						definition.getLine(),
+						definition.getColumn(),
+						"Repeated variable definition " + definition.getName()
+				);
+			} else {
+				new ErrorType(
+						definition.getLine(),
+						definition.getColumn(),
+						"Repeated function definition " + definition.getName());
+			}
+
 			return false;
 		}
 	}
