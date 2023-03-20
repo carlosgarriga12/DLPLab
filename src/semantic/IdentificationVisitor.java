@@ -50,20 +50,4 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
         }
         return null;
     }
-
-    @Override
-    public Void visit(IfElse ifElse, Void param) {
-        st.set();
-        super.visit(ifElse, param);
-        st.reset();
-        return null;
-    }
-
-    @Override
-    public Void visit(While aWhile, Void param) {
-        st.set();
-        super.visit(aWhile, param);
-        st.reset();
-        return null;
-    }
 }

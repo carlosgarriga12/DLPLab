@@ -9,7 +9,6 @@ record:struct {
 def f(a:int, c:double):int {
   real:double;
   real = c;
-  i = a;
   return n;
 }
 # Main program
