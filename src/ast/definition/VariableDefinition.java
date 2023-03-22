@@ -12,6 +12,11 @@ public class VariableDefinition extends AbstractDefinition implements Statement 
     }
 
     @Override
+    public String toString() {
+        return name + ": " + type.toString() + ";";
+    }
+
+    @Override
     public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
         return v.visit(this, null);
     }

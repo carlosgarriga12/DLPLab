@@ -17,9 +17,11 @@ public class Print extends AbstractASTNode implements Statement {
 
     @Override
     public String toString() {
-        return "Print{" +
-                "expressions=" + expressions +
-                '}';
+        String exps = "";
+        for (Expression e: expressions) {
+            exps += e.toString() + ", ";
+        }
+        return "print " + exps + ";";
     }
 
     @Override

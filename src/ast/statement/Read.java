@@ -17,9 +17,11 @@ public class Read extends AbstractASTNode implements Statement {
 
     @Override
     public String toString() {
-        return "Read{" +
-                "expressions=" + expressions +
-                '}';
+        String exps = "";
+        for (Expression e: expressions) {
+            exps += e.toString() + ", ";
+        }
+        return "input " + exps + ";";
     }
 
     @Override

@@ -22,11 +22,19 @@ public class IfElse extends AbstractASTNode implements Statement {
 
     @Override
     public String toString() {
-        return "IfElse{" +
-                "ifStatements=" + ifStatements +
-                ", elseStatements=" + elseStatements +
-                ", expression=" + expression +
-                '}';
+        String ifStmts = "";
+        for(Statement st: ifStatements) {
+            ifStmts += st.toString() + "\n";
+        }
+        if (elseStatements.isEmpty()) {
+            return "if (" + expression.toString() + ")" + "{" + ifStmts + "}";
+        } else {
+            String elseStmts = "";
+            for(Statement st: elseStatements) {
+                elseStmts += st.toString() + "\n";
+            }
+            return "if (" + expression.toString() + ")" + "{" + ifStmts + "}" + "else { " + elseStmts + "}";
+        }
     }
 
     @Override

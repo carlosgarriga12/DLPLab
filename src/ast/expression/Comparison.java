@@ -16,6 +16,11 @@ public class Comparison extends AbstractExpression{
     }
 
     @Override
+    public String toString() {
+        return leftExpression.toString() + operator + rightExpression.toString();
+    }
+
+    @Override
     public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
         return v.visit(this, null);
     }

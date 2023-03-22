@@ -15,9 +15,11 @@ public class RecordType extends AbstractType{
 
     @Override
     public String toString() {
-        return "RecordType{" +
-                "recordFields=" + recordFields +
-                '}';
+        String fields = "";
+        for (RecordField r: recordFields) {
+            fields += r.toString() + "\n";
+        }
+        return "struct {\n" + fields + "}";
     }
 
     @Override

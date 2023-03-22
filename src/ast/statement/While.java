@@ -4,6 +4,7 @@ import ast.AbstractASTNode;
 import ast.expression.Expression;
 import visitor.Visitor;
 
+import javax.swing.plaf.nimbus.State;
 import java.util.List;
 
 public class While extends AbstractASTNode implements Statement{
@@ -18,10 +19,11 @@ public class While extends AbstractASTNode implements Statement{
 
     @Override
     public String toString() {
-        return "While{" +
-                "statements=" + statements +
-                ", expression=" + expression +
-                '}';
+        String stmts = "";
+        for(Statement st: statements) {
+            stmts+= st.toString() + "\n";
+        }
+        return "while ( " + expression + " ) {\n" + stmts;
     }
 
     @Override

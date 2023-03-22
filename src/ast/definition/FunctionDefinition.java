@@ -17,6 +17,11 @@ public class FunctionDefinition extends AbstractDefinition {
     }
 
     @Override
+    public String toString() {
+        return "def " + getName();
+    }
+
+    @Override
     public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
         return v.visit(this, null);
     }

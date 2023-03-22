@@ -14,9 +14,7 @@ public class Return extends AbstractASTNode implements Statement{
 
     @Override
     public String toString() {
-        return "Return{" +
-                "expression=" + expression +
-                '}';
+        return "return " + expression + ";";
     }
 
     @Override
