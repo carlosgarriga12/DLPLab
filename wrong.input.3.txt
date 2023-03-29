@@ -1,0 +1,15 @@
+
+i:int;
+f:double;
+
+a:struct  {
+  a:int;
+};
+
+def main(): {
+  print i && f; 	# Error 1 the type of the second one is double, we can only compare integers
+  print a >= 3; 	# Error 2 the type of a is struct
+  while f:     		# Error 3 the type of f is double
+    if f:      		# Error 4 the type of f is double
+      print !f;   	# Error 5 the type of f is double
+}

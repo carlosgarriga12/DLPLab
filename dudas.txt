@@ -1,0 +1,17 @@
+CAST
+
+INT -> CHAR
+INT -> REAL
+
+CHAR -> INT
+CHAR -> DOUBLE
+
+DOUBLE -> INT
+DOUBLE -> CHAR
+
+What happens if a function needs an integer
+and a double as arguments and it receives two chars?
+Will it generate two errors?
+
+Void Functions should not have return statements
+Functions must return its returnType value

@@ -1,0 +1,11 @@
+integer:int;
+character:char;
+real:double;
+
+def g(): {
+  return 2;
+}
+
+def main(): {
+
+}

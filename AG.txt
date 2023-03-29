@@ -1,0 +1,57 @@
+/*Expressions*/
+
+(1) Arithmetic: expression1 -> expression2 (+|-|*|/) expression3
+(1) expression1.type = expression2.type.arithmetic(expression3.type)
+
+(2) ArrayAccess: expression1 -> expression2 expression3
+(2) expression1.type = expression2.type.squareBrackets(expression3.type)
+
+(3) Cast: expression1 -> type expression2
+(3) expression1.type = expression2.type.cast(type)
+
+(4) CharLiteral: expression -> CHAR_LITERAL
+(4) expression.type = new CharType()
+
+(5) Comparison: expression1 -> expression2 ('<=' | '<' | '==' | '>' | '>='| '!=') expression3
+(5) expression1.type = expression2.type.comparison(expression3.type)
+
+(6) FieldAccess: expression1 -> expression2 ID
+(6) expression1.type = expression2.type.dot(ID)
+
+(7) FunctionInvocation: expression1 -> expression2 expression3*
+(7) expression1.type = expression2.type.parenthesis(expression3*.stream().map(exp -> exp.type))
+
+(8) IntLiteral: expression -> INT_LITERAL
+(8) expression.type = new IntType()
+
+(9) Logical: expression1 -> expression2 ('&&'| '||') expression3
+(9) expression1.type = expression2.type.logical(expression3.type)
+
+(10)Not: expression1 -> expression2
+(10)expression1.type = expression2.type.not()
+
+(11)RealLiteral: expression -> REAL_LITERAL
+(11)expression.type = new RealType()
+
+(12)UnaryMinus: expression1 -> expression2
+(12)expression1.type = expression2.type.unaryMinus()
+
+(13)Variable: expression -> type ID
+(13)expression.type = expression.definition.type
+
+/*Definitions*/
+(1) FuncDefinition: definition -> type ID definition* statement*
+(1) statement*.stream().forEach(st -> st.returnType = type.returnType)
+
+/*Statements*/
+(1) Assignment: statement -> expression1 expression2
+(1) expression1.type.assignment(expression2.type)
+
+(2) IfElse: statement -> expression statement1* statement2*
+(2) expression.type.asLogical()
+
+(3) Return: statement -> expression
+(3) expression.type.mustBeSubtype(statement.returnType)
+
+(4) While: statement1 -> expression statement2*
+(4) expression.type.asLogical()

@@ -28,21 +28,22 @@ public class SymbolTable {
 	}
 	
 	public boolean insert(Definition definition) {
-		if(findInCurrentScope(definition.getName()) == null) {
+		Definition definitionToFind = findInCurrentScope(definition.getName());
+		if(definitionToFind == null) {
 			table.get(scope).put(definition.getName(), definition);
 			definition.setScope(scope);
 			return true;
 		} else {
 			if (definition instanceof VariableDefinition) {
 				new ErrorType(
-						definition.getLine(),
-						definition.getColumn(),
+						definitionToFind.getLine(),
+						definitionToFind.getColumn(),
 						"Repeated variable definition " + definition.getName()
 				);
 			} else {
 				new ErrorType(
-						definition.getLine(),
-						definition.getColumn(),
+						definitionToFind.getLine(),
+						definitionToFind.getColumn(),
 						"Repeated function definition " + definition.getName());
 			}
 

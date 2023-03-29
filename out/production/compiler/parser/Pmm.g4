@@ -266,7 +266,7 @@ expression returns [Expression ast]:
                 $OP.text
               );}
 
-        //Logical
+        //Comparison
         | exp1=expression OP=('<' | '<=' | '==' |'>=' | '>' | '!=') exp2=expression
         {$ast = new Comparison(
                  $exp1.ast.getLine(),

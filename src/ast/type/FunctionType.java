@@ -1,5 +1,6 @@
 package ast.type;
 
+import ast.ASTNode;
 import ast.definition.VariableDefinition;
 import visitor.Visitor;
 
@@ -27,5 +28,40 @@ public class FunctionType extends AbstractType{
     @Override
     public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
         return v.visit(this, null);
+    }
+
+    @Override
+    public Type parenthesis(List<Type> types, ASTNode node) {
+        if(parameters.size() != types.size()) {
+            return new ErrorType(
+                    node.getLine(),
+                    node.getColumn(),
+                    String.format(
+                            "The function needs to receive %d arguments and it is receiving %d",
+                            parameters.size(),
+                            types.size()
+                    )
+            );
+        }
+        for(int i = 0; i< parameters.size(); i++) {
+            Type type = types.get(i);
+            if(!parameters.get(i).getType().equals(type)){
+                return new ErrorType(
+                        node.getLine(),
+                        node.getColumn(),
+                        String.format(
+                                "Argument type %s mismatch with parameter type %s in function invocation",
+                                types.get(i),
+                                parameters.get(i).getType()
+                        )
+                );
+            }
+        }
+
+        if(returnType == null) {
+            return VoidType.getInstance();
+        } else {
+            return returnType;
+        }
     }
 }

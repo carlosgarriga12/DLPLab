@@ -1,5 +1,6 @@
 package ast.type;
 
+import ast.ASTNode;
 import visitor.Visitor;
 
 public class IntType extends AbstractType{
@@ -27,4 +28,75 @@ public class IntType extends AbstractType{
     public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
         return v.visit(this, null);
     }
+
+    @Override
+    public Type assignment(Type type, ASTNode node) {
+        if(type instanceof IntType || type instanceof CharType) {
+            return this;
+        }
+        if(type instanceof ErrorType) {
+            return type;
+        }
+
+        return new ErrorType(
+                node.getLine(),
+                node.getColumn(),
+                String.format("Cannot assign a %s into an Int", type)
+        );
+    }
+
+    @Override
+    public void asLogical(Type type, ASTNode node) {
+        /*Only valid case*/
+    }
+
+    @Override
+    public Type arithmetic(Type type, ASTNode node) {
+        if(type instanceof RealType) {
+            return RealType.getInstance();
+        }
+        if(type instanceof CharType) {
+            return this;
+        }
+        if(type instanceof IntType) {
+            return this;
+        }
+        if(type instanceof ErrorType) {
+            return type;
+        }
+        return new ErrorType(
+                node.getLine(),
+                node.getColumn(),
+                String.format("Cannot perform arithmetic operation between IntType and %s", type)
+        );
+    }
+
+    @Override
+    public Type cast(Type type, ASTNode node) {
+        if(type instanceof RealType) {
+            return RealType.getInstance();
+        }
+        if(type instanceof CharType) {
+            return CharType.getInstance();
+        }
+        return new ErrorType(
+                node.getLine(),
+                node.getColumn(),
+                String.format("Cannot cast from type %s to %s type", this, type)
+        );
+    }
+
+    @Override
+    public boolean mustBeSubtype(Type type, ASTNode node) {
+        if(type instanceof IntType || type instanceof RealType) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Type unaryMinus(ASTNode node) {
+        return this;
+    }
+
 }

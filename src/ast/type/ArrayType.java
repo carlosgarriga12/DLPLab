@@ -1,5 +1,6 @@
 package ast.type;
 
+import ast.ASTNode;
 import visitor.Visitor;
 
 public class ArrayType extends AbstractType{
@@ -23,5 +24,44 @@ public class ArrayType extends AbstractType{
     @Override
     public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
         return v.visit(this, null);
+    }
+
+    @Override
+    public boolean mustBeSubtype(Type type, ASTNode node) {
+        return false;
+    }
+
+    @Override
+    public Type squareBrackets(Type type, ASTNode node) {
+        if(type instanceof IntType) {
+            return this.type;
+        }
+
+        if(type instanceof ErrorType) {
+            return type;
+        }
+
+        return new ErrorType(
+                node.getLine(),
+                node.getColumn(),
+                String.format("Cannot perform indexing operation " +
+                        "since indexing type is %s and not IntType", type)
+        );
+    }
+
+    @Override
+    public Type assignment(Type type, ASTNode node) {
+        if(type instanceof ArrayType) {
+            return this;
+        }
+
+        if(type instanceof ErrorType) {
+            return type;
+        }
+        return new ErrorType(
+                node.getLine(),
+                node.getColumn(),
+                String.format("Cannot assign a %s into an array", type));
+
     }
 }

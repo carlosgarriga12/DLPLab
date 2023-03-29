@@ -4,8 +4,6 @@ import ast.definition.Definition;
 import ast.definition.FunctionDefinition;
 import ast.definition.VariableDefinition;
 import ast.expression.Variable;
-import ast.statement.IfElse;
-import ast.statement.While;
 import ast.type.ErrorType;
 import symboltable.SymbolTable;
 import visitor.AbstractVisitor;
