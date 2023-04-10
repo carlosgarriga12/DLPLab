@@ -17,8 +17,9 @@ public class AbstractVisitor<TP, TR> implements Visitor <TP,TR>{
 
     @Override
     public TR visit(FunctionDefinition functionDefinition, TP param) {
-        functionDefinition.statements.forEach(stmt -> stmt.accept(this, null));
         functionDefinition.getType().accept(this, null);
+        functionDefinition.statements.forEach(stmt -> stmt.accept(this, null));
+
         return null;
     }
 

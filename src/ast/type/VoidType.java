@@ -27,4 +27,8 @@ public class VoidType extends AbstractType{
         return v.visit(this, null);
     }
 
+    @Override
+    public int numberOfBytes() {
+        return 0;
+    }
 }

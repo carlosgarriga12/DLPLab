@@ -13,7 +13,7 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
 
     @Override
     public Void visit(VariableDefinition variableDefinition, Void param) {
-        super.visit(variableDefinition, param);
+        super.visit(variableDefinition, null);
         st.insert(variableDefinition);
         return null;
     }
@@ -22,7 +22,7 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
     public Void visit(FunctionDefinition functionDefinition, Void param) {
         st.insert(functionDefinition);
         st.set();
-        super.visit(functionDefinition, param);
+        super.visit(functionDefinition, null);
         st.reset();
         return null;
     }
