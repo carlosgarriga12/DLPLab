@@ -15,3 +15,5 @@ Will it generate two errors?
 
 Void Functions should not have return statements
 Functions must return its returnType value
+Check that a function has only one return statement
+Check that a function has the last statement as a return
