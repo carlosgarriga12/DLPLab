@@ -1,0 +1,4 @@
+GLOBAL VARIABLES = SUM(numberOfBytes(types(the prev variables not including itself)))
+LOCAL VARIABLES = BP - SUM(theNumberOfBytes of the prev variables including itself)
+PARAMETERS = BP + 4 + SUM(theNumberOfBytes(the parameters on the right not including itself))
+RECORD FIELD = the same as global variables

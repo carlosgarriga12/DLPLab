@@ -6,9 +6,14 @@ import ast.AbstractASTNode;
 import java.util.List;
 
 public abstract class AbstractType extends AbstractASTNode implements Type {
+
+    public int numberOfBytes;
+
     public AbstractType(int line, int column) {
         super(line, column);
     }
+
+
 
     @Override
     public Type assignment(Type type, ASTNode node) {

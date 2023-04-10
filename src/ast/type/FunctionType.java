@@ -64,4 +64,11 @@ public class FunctionType extends AbstractType{
             return returnType;
         }
     }
+
+    //In the case of delegates, a function is just a location in memory so
+    //in this case we set 2 as the number of bytes
+    @Override
+    public int numberOfBytes() {
+        return 2;
+    }
 }

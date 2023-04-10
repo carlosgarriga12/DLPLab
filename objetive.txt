@@ -1,2 +1,5 @@
-Implement the type checking pass of the semantic analysis phase. Annotate the AST with all the type information. Detect the type errors in the 5 input files provided.
-
+Annotate the AST with the offsets of:
+- Global variables
+- Local variables
+- (Formal) parameters
+- Record fields

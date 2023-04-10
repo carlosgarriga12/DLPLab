@@ -64,4 +64,10 @@ public class RecordType extends AbstractType{
             return rf.type;
         }
     }
+
+    @Override
+    public int numberOfBytes() {
+        return recordFields.stream().mapToInt(rf -> rf.type.numberOfBytes()).sum();
+    }
+
 }

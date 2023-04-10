@@ -86,4 +86,11 @@ public class CharType extends AbstractType{
     public boolean mustBeSubtype(Type type, ASTNode node) {
         return true;
     }
+
+    @Override
+    public int numberOfBytes() {
+        return 1;
+    }
+
+
 }

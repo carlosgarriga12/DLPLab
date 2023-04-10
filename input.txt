@@ -1,20 +1,29 @@
 # Global variables
-i,n:int;
-c:char;
-record:struct {
-  intField:int;
-  realField:double;
-};
+i: int;				
+r: double; 			
+c: char; 			
+
 # Functions
-def f(a:int, c:double):int {
-  real:double;
-  real = c;
-  return n;
-}
-# Main program
-def main(): {
-  i:int;
-  r:double;
-  print i, f(n,r), record.intField, record.realField;
+def f(pi:int, pr:double): int {		
+  lr:double; 				
+  li:int;			
+  
+  li = pi;
+  lr = pr;
+  return pi;
 }
 
+# Main program
+def main(): {
+  pair: struct { 	   
+    integer:int;	
+    character:char;	
+  };
+	
+  i = 3;
+  c = 'a';
+  r = 3.8;
+  pair.integer = i;
+  pair.character = c;
+  f(i, r);
+}

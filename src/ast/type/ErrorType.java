@@ -69,4 +69,11 @@ public class ErrorType extends AbstractType{
         return false;
     }
 
+    @Override
+    public int numberOfBytes() {
+        new RuntimeException("Exception in code. CANNOT ACCESS THE BYTES OF A ERROR TYPE");
+
+        return -1;
+    }
+
 }

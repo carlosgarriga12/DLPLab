@@ -85,4 +85,9 @@ public class RealType extends AbstractType{
     public Type unaryMinus(ASTNode node) {
         return this;
     }
+
+    @Override
+    public int numberOfBytes() {
+        return 4;
+    }
 }

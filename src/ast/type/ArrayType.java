@@ -64,4 +64,9 @@ public class ArrayType extends AbstractType{
                 String.format("Cannot assign a %s into an array", type));
 
     }
+
+    @Override
+    public int numberOfBytes() {
+        return this.type.numberOfBytes() * size;
+    }
 }
