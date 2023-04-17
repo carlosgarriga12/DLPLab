@@ -61,11 +61,11 @@ public class OffSetVisitor extends AbstractVisitor<Void, Void> {
 
     @Override
     public Void visit(FunctionType functionType, Void param) {
-        int offsetParameters = 4;
+        int offsetParameters = 0;
         totalNumberBytesSumLocal = 0;
 
         for(int i = functionType.parameters.size() - 1; i >= 0 ; i--) {
-            functionType.parameters.get(i).setOffset(offsetParameters);
+            functionType.parameters.get(i).setOffset(offsetParameters + 4);
             offsetParameters += functionType.parameters.get(i).getType().numberOfBytes();
         }
         return null;
