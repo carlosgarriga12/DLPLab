@@ -150,4 +150,29 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void>{
         cg.sub(unaryMinus.getType().suffix());
         return null;
     }
+
+    /**
+     * value[[Comparison: expression1 -> expression2 expression3]]() =
+     *
+     * value[[expression2]]
+     * value[[expression3]]
+     *
+     * switch(expression1.op) {
+     *     case "<=": <le> expression1.type.suffix() break;
+     *     case "<": <lt> expression1.type.suffix() break;
+     *     case "==" <eq> expression1.type.suffix() break;
+     *     case "!=" <ne> expression1.type.suffix()  break;
+     *     case ">": <gt> expression1.type.suffix() break;
+     *     case ">=": <ge> expression1.type.suffix() break;
+     * }
+     *
+     */
+    @Override
+    public Void visit(Comparison comparison, Void param) {
+        comparison.leftExpression.accept(this, param);
+        comparison.rightExpression.accept(this, param);
+
+        cg.comparison(comparison);
+        return null;
+    }
 }

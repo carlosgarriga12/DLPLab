@@ -10,57 +10,81 @@ main:
 
 ' * int a(offset: -2)
 ' * int i(offset: -4)
-enter -4
+enter 4
+
+' * line 8 Assignment 
+
 pusha 0
 pushb 97
 storeb
+
+' * line 9 Print 
+
 pusha 0
 loadb
 outb
 pushb 10
 outb
+
+' * line 11 Assignment 
+
 push bp
 pushi -2
-add
+addi
 pushi 1
 storei
+
+' * line 12 Assignment 
+
 push bp
 pushi -4
-add
+addi
 pushb 48
 b2i
 pushi 3
-mul
+muli
 storei
+
+' * line 13 Print 
+
 push bp
 pushi -2
-add
+addi
 loadi
 outi
 pushb 32
 outb
 push bp
 pushi -4
-add
+addi
 loadi
 outi
 pushb 10
 outb
+
+' * line 15 Input 
+
 pusha 3
 inf
 storef
+
+' * line 16 Print 
+
 pushi 2
 i2f
 pusha 3
 loadf
-mul
+mulf
 outf
 pushb 10
 outb
+
+' * line 18 Print 
+
 pushi 3
 i2f
 pushf 4.5
-sub
+subf
 outf
 pushb 32
 outb
@@ -68,7 +92,7 @@ pushb 48
 b2i
 i2f
 pushf 48.0
-div
+divf
 outf
 pushb 32
 outb
@@ -82,16 +106,28 @@ outb
 pushi 0
 pushb 49
 b2i
-add
+addi
 outi
 pushb 10
 outb
+
+' * line 22 Print 
+
+pushi 1
+pushi 2
+lti
 outi
 pushb 32
 outb
+pushi 4
+pushi 3
+gei
 outi
 pushb 32
 outb
+pushi 5
+pushi 5
+eqi
 outi
 pushb 32
 outb
@@ -112,3 +148,5 @@ not
 outi
 pushb 10
 outb
+
+ret 0, 4, 0

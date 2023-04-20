@@ -67,12 +67,14 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
      */
     @Override
     public Void visit(Read read, Void param) {
+        cg.addComment(" * line "+ read.getLine() +" Input " + "\n");
         for(Expression expression: read.expressions) {
             expression.accept(addressCGVisitor, param);
             cg.in(expression.getType());
             cg.store(expression.getType());
         }
 
+        cg.newLine();
         return null;
     }
 
@@ -84,10 +86,12 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
      */
     @Override
     public Void visit(Print print, Void param) {
+        cg.addComment(" * line "+ print.getLine() +" Print " + "\n");
         for (Expression expression: print.expressions) {
             expression.accept(valueCGVisitor, param);
             cg.out(expression.getType());
         }
+        cg.newLine();
         return null;
     }
 
@@ -100,10 +104,11 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
      */
     @Override
     public Void visit(Assignment assignment, Void param) {
-
+        cg.addComment(" * line "+ assignment.getLine() +" Assignment " + "\n");
         assignment.leftExpression.accept(addressCGVisitor, param);
         assignment.rightExpression.accept(valueCGVisitor, param);
         cg.store(assignment.leftExpression.getType());
+        cg.newLine();
         return null;
     }
 
@@ -128,7 +133,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
      *
      *   <' * Local variables: >
      *   variableDefinition*.forEach( varDef -> { execute[[varDef]] });
-     *   int byteLocals = variableDefinition*.isEmpty() ? 0 : variableDefinition*.get(variableDefinition*.size() -1).offset
+     *   int byteLocals = variableDefinition*.isEmpty() ? 0 : -variableDefinition*.get(variableDefinition*.size() -1).offset
      *
      *   <enter > byteLocals
      *
@@ -166,7 +171,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
         int byteLocals = variableDefinitions.isEmpty() ?
                 0
                 :
-                ((VariableDefinition)variableDefinitions.get(variableDefinitions.size() - 1)).getOffset();
+                -((VariableDefinition)variableDefinitions.get(variableDefinitions.size() - 1)).getOffset();
 
 
         cg.enter(byteLocals);

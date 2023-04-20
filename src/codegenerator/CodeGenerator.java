@@ -1,6 +1,7 @@
 package codegenerator;
 
 import ast.expression.Arithmetic;
+import ast.expression.Comparison;
 import ast.expression.Logical;
 import ast.type.CharType;
 import ast.type.IntType;
@@ -61,25 +62,25 @@ public class CodeGenerator {
     }
 
     public void add(char suffix) {
-        String auxSuffix = suffix == 'b'? String.valueOf(suffix) : "";
+        String auxSuffix = suffix != 'b'? String.valueOf(suffix) : "";
         out.write("add" + auxSuffix + "\n");
         out.flush();
     }
 
     public void sub(char suffix) {
-        String auxSuffix = suffix == 'b'? String.valueOf(suffix) : "";
+        String auxSuffix = suffix != 'b'? String.valueOf(suffix) : "";
         out.write("sub" + auxSuffix + "\n");
         out.flush();
     }
 
     public void mul(char suffix) {
-        String auxSuffix = suffix == 'b'? String.valueOf(suffix) : "";
+        String auxSuffix = suffix != 'b'? String.valueOf(suffix) : "";
         out.write("mul" + auxSuffix + "\n");
         out.flush();
     }
 
     public void div(char suffix) {
-        String auxSuffix = suffix == 'b'? String.valueOf(suffix) : "";
+        String auxSuffix = suffix != 'b'? String.valueOf(suffix) : "";
         out.write("div" + auxSuffix + "\n");
         out.flush();
     }
@@ -176,12 +177,39 @@ public class CodeGenerator {
     }
 
     public void enter(int byteLocals) {
-        out.write("enter " + byteLocals + "\n");
+        out.write("enter " + byteLocals + "\n\n");
         out.flush();
     }
 
     public void ret(int bytesReturn, int byteLocals, int byteParameters) {
         out.write("ret " + bytesReturn  + ", " + byteLocals + ", " + byteParameters + "\n");
         out.flush();
+    }
+
+    public void newLine() {
+        out.write("\n");
+        out.flush();
+    }
+
+    public void comparison(Comparison comparison) {
+        switch (comparison.operator) {
+            case "<=":
+                out.write("le" + comparison.type.suffix() + "\n");
+                break;
+            case "<":
+                out.write("lt" + comparison.type.suffix() + "\n");
+                break;
+            case "==":
+                out.write("eq" + comparison.type.suffix() + "\n");
+                break;
+            case ">":
+                out.write("gt" + comparison.type.suffix() + "\n");
+                break;
+            case ">=":
+                out.write("ge" + comparison.type.suffix() + "\n");
+                break;
+        }
+        out.flush();
+
     }
 }
