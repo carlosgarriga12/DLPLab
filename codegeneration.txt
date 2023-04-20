@@ -1,0 +1,55 @@
+-Code generator
+
+-AddressCGVisitor
+-ValueCGVisitor
+-ExecuteCGVisitor
+
+-AddressCGVisitor and ValueCGVisitor have a 1 to 1 relationship bidirectional
+-ExecuteCGVisitor uses AddressCGVisitor and ValueCGVisitor
+
+-------------------------------------------------------------------------------
+
+execute[[Program:program -> definition*]]() =
+
+for(Definition def : definition*)
+    if(def instanceof VarDefinition)
+        execute[[def]]()
+
+<call main>
+<halt>
+for(Definition definition : definition*)
+    if(def instanceof FuncDefinition)
+        execute[[def]]()
+
+-------------------------------------------------------------------------------
+
+execute[[Print: statement -> expression]]() =
+
+value[[expression]]()
+<out> + expression.type.suffix()
+
+------------------------------------------------------------------------------
+
+execute[[Input: statement -> expression]]() =
+
+address[[expression]]()
+<in> expression.type.suffix()
+<store> expression.type.suffix()
+
+------------------------------------------------------------------------------
+
+address[[Variable: expression -> ID]]() =
+
+if(expression.definition.scope == 0)
+    <pusha> + expression.definition.offset
+else {
+    <push bp>
+    <pushi> expression.definition.offset
+    <addi>
+}
+
+------------------------------------------------------------------------------
+value[[Variable: expression -> ID]]() =
+
+address[[expression]]
+<load> expression.type.suffix()

@@ -104,4 +104,37 @@ public class IntType extends AbstractType{
         return 2;
     }
 
+    @Override
+    public char suffix() {
+        return 'i';
+    }
+
+    @Override
+    public Type comparison(Type type, ASTNode astNode) {
+        if (type.equals(this)) {
+            return this;
+        }
+        return new ErrorType(
+                astNode.getLine(),
+                astNode.getColumn(),
+                String.format("Cannot perform comparison between type %s and %s type", this, type)
+        );
+    }
+
+    @Override
+    public Type logical(Type type, ASTNode astNode) {
+        if (type.equals(this)) {
+            return this;
+        }
+        return new ErrorType(
+                astNode.getLine(),
+                astNode.getColumn(),
+                String.format("Cannot perform logical between type %s and %s type", this, type)
+        );
+    }
+
+    @Override
+    public Type not(ASTNode astNode) {
+        return this;
+    }
 }

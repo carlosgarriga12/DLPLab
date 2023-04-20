@@ -1,100 +1,114 @@
-
-#source	"input.txt"
-
-	' * int i (offset 0)
-	' * real r (offset 2)
-	' * char c (offset 6)
-
-' Invocation to the main function
+#SOURCE "input.txt"
+' * char c(offset: 0)
+' * int i(offset: 1)
+' * real r(offset: 3)
 call main
 halt
 
+main:
+' * Local variables:
 
-#line	7
- f:
-	' * Parameters
-	' * int pi (offset 8)
-	' * real pr (offset 4)
-	' * Local variables
-	' * real lr (offset -4)
-	' * int li (offset -6)
-	enter	6
-
-#line	11
-	push	bp
-	pushi	-6
-	addi
-	push	bp
-	pushi	8
-	addi
-	loadi
-	storei
-
-#line	12
-	push	bp
-	pushi	-4
-	addi
-	push	bp
-	pushi	4
-	addi
-	loadf
-	storef
-
-#line	13
-	' * Return
-	push	bp
-	pushi	8
-	addi
-	loadi
-	ret	2, 6, 6
-
-#line	17
- main:
-	' * Parameters
-	' * Local variables
-	' * record((integer x int)x(character x char)) pair (offset -3)
-	enter	3
-
-#line	23
-	pusha	0
-	pushi	3
-	storei
-
-#line	24
-	pusha	6
-	pushb	97
-	storeb
-
-#line	25
-	pusha	2
-	pushf	3.8
-	storef
-
-#line	26
-	push	bp
-	pushi	-3
-	addi
-	pushi	0
-	addi
-	pusha	0
-	loadi
-	storei
-
-#line	27
-	push	bp
-	pushi	-3
-	addi
-	pushi	2
-	addi
-	pusha	6
-	loadb
-	storeb
-
-#line	28
-	pusha	0
-	loadi
-	pusha	2
-	loadf
-	call	f
-	popi
-	ret	0, 3, 0
+' * int a(offset: -2)
+' * int i(offset: -4)
+enter -4
+pusha 0
+pushb 97
+storeb
+pusha 0
+loadb
+outb
+pushb 10
+outb
+push bp
+pushi -2
+add
+pushi 1
+storei
+push bp
+pushi -4
+add
+pushb 48
+b2i
+pushi 3
+mul
+storei
+push bp
+pushi -2
+add
+loadi
+outi
+pushb 32
+outb
+push bp
+pushi -4
+add
+loadi
+outi
+pushb 10
+outb
+pusha 3
+inf
+storef
+pushi 2
+i2f
+pusha 3
+loadf
+mul
+outf
+pushb 10
+outb
+pushi 3
+i2f
+pushf 4.5
+sub
+outf
+pushb 32
+outb
+pushb 48
+b2i
+i2f
+pushf 48.0
+div
+outf
+pushb 32
+outb
+pushb 48
+b2i
+pushb 49
+b2i
+outi
+pushb 32
+outb
+pushi 0
+pushb 49
+b2i
+add
+outi
+pushb 10
+outb
+outi
+pushb 32
+outb
+outi
+pushb 32
+outb
+outi
+pushb 32
+outb
+pushi 1
+pushi 2
+and
+outi
+pushb 32
+outb
+pushi 0
+pushi 3
+or
+outi
+pushb 32
+outb
+pushi 0
+not
+outi
+pushb 10
+outb

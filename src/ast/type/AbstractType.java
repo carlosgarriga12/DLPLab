@@ -127,4 +127,10 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
         return false;
     }
 
+    @Override
+    public char suffix() {
+        new RuntimeException("Exception raised due to caller for method suffix");
+        return Character.MIN_VALUE;
+    }
+
 }

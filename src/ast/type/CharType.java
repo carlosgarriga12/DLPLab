@@ -92,5 +92,21 @@ public class CharType extends AbstractType{
         return 1;
     }
 
+    @Override
+    public char suffix(){
+        return 'b';
+    }
+
+    @Override
+    public Type comparison(Type type, ASTNode astNode) {
+        if (type.equals(this)) {
+            return this;
+        }
+        return new ErrorType(
+                astNode.getLine(),
+                astNode.getColumn(),
+                String.format("Cannot perform comparison between type %s to %s type", this, type)
+        );
+    }
 
 }
