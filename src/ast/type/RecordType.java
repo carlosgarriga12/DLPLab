@@ -14,7 +14,7 @@ public class RecordType extends AbstractType{
         this.recordFields = new ArrayList<>( recordFields );
     }
 
-    private RecordField findRecordFieldByName(String id) {
+    public RecordField findRecordFieldByName(String id) {
         RecordField rf = null;
 
         for(RecordField recordField: recordFields) {
@@ -69,5 +69,7 @@ public class RecordType extends AbstractType{
     public int numberOfBytes() {
         return recordFields.stream().mapToInt(rf -> rf.type.numberOfBytes()).sum();
     }
+
+
 
 }

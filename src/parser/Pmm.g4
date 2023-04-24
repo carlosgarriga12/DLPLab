@@ -70,23 +70,32 @@ functionDefinition returns[Definition ast] locals [List<Statement> statements = 
                 START='def' ID '(' parameters ')'':' built_in_type
                 '{' (varDefinition {$statements.addAll($varDefinition.ast);} )*
                     (statement {$statements.add($statement.ast);} )* '}'
-                {$ast = new FunctionDefinition(
-                                           $START.getLine(),
-                                           $START.getCharPositionInLine() + 1,
-                                           new FunctionType(0, 0, $parameters.ast, $built_in_type.ast),
-                                           $ID.text,
-                                           $statements
-                                       );}
+                {
+
+                FunctionDefinition funcDef = new FunctionDefinition(
+                                                $START.getLine(),
+                                                $START.getCharPositionInLine() + 1,
+                                                new FunctionType(0, 0, $parameters.ast, $built_in_type.ast),
+                                                $ID.text,
+                                                $statements
+                                            );
+                funcDef.addParameters($parameters.ast);
+                $ast = funcDef;}
                 | START='def' ID '(' parameters ')'':'
                 '{' (varDefinition {$statements.addAll($varDefinition.ast);} )*
                     (statement {$statements.add($statement.ast);} )* '}'
-                {$ast = new FunctionDefinition(
-                                           $START.getLine(),
-                                           $START.getCharPositionInLine() + 1,
-                                           new FunctionType(0, 0, $parameters.ast, VoidType.getInstance()),
-                                           $ID.text,
-                                           $statements
-                                       );}
+                {
+                FunctionDefinition funcDef = new FunctionDefinition(
+                                                    $START.getLine(),
+                                                    $START.getCharPositionInLine() + 1,
+                                                    new FunctionType(0, 0, $parameters.ast, VoidType.getInstance()),
+                                                    $ID.text,
+                                                    $statements
+                                                );
+
+                funcDef.addParameters($parameters.ast);
+                $ast = funcDef;
+                }
                 ;
 
 

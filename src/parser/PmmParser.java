@@ -546,13 +546,17 @@ public class PmmParser extends Parser {
 				}
 				setState(114);
 				match(T__6);
-				((FunctionDefinitionContext)_localctx).ast =  new FunctionDefinition(
-				                                           ((FunctionDefinitionContext)_localctx).START.getLine(),
-				                                           ((FunctionDefinitionContext)_localctx).START.getCharPositionInLine() + 1,
-				                                           new FunctionType(0, 0, ((FunctionDefinitionContext)_localctx).parameters.ast, ((FunctionDefinitionContext)_localctx).built_in_type.ast),
-				                                           (((FunctionDefinitionContext)_localctx).ID!=null?((FunctionDefinitionContext)_localctx).ID.getText():null),
-				                                           _localctx.statements
-				                                       );
+
+
+				                FunctionDefinition funcDef = new FunctionDefinition(
+				                                                ((FunctionDefinitionContext)_localctx).START.getLine(),
+				                                                ((FunctionDefinitionContext)_localctx).START.getCharPositionInLine() + 1,
+				                                                new FunctionType(0, 0, ((FunctionDefinitionContext)_localctx).parameters.ast, ((FunctionDefinitionContext)_localctx).built_in_type.ast),
+				                                                (((FunctionDefinitionContext)_localctx).ID!=null?((FunctionDefinitionContext)_localctx).ID.getText():null),
+				                                                _localctx.statements
+				                                            );
+				                funcDef.addParameters(((FunctionDefinitionContext)_localctx).parameters.ast);
+				                ((FunctionDefinitionContext)_localctx).ast =  funcDef;
 				}
 				break;
 			case 2:
@@ -606,13 +610,18 @@ public class PmmParser extends Parser {
 				}
 				setState(140);
 				match(T__6);
-				((FunctionDefinitionContext)_localctx).ast =  new FunctionDefinition(
-				                                           ((FunctionDefinitionContext)_localctx).START.getLine(),
-				                                           ((FunctionDefinitionContext)_localctx).START.getCharPositionInLine() + 1,
-				                                           new FunctionType(0, 0, ((FunctionDefinitionContext)_localctx).parameters.ast, VoidType.getInstance()),
-				                                           (((FunctionDefinitionContext)_localctx).ID!=null?((FunctionDefinitionContext)_localctx).ID.getText():null),
-				                                           _localctx.statements
-				                                       );
+
+				                FunctionDefinition funcDef = new FunctionDefinition(
+				                                                    ((FunctionDefinitionContext)_localctx).START.getLine(),
+				                                                    ((FunctionDefinitionContext)_localctx).START.getCharPositionInLine() + 1,
+				                                                    new FunctionType(0, 0, ((FunctionDefinitionContext)_localctx).parameters.ast, VoidType.getInstance()),
+				                                                    (((FunctionDefinitionContext)_localctx).ID!=null?((FunctionDefinitionContext)_localctx).ID.getText():null),
+				                                                    _localctx.statements
+				                                                );
+
+				                funcDef.addParameters(((FunctionDefinitionContext)_localctx).parameters.ast);
+				                ((FunctionDefinitionContext)_localctx).ast =  funcDef;
+				                
 				}
 				break;
 			}

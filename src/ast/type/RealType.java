@@ -69,6 +69,12 @@ public class RealType extends AbstractType{
 
     @Override
     public Type cast(Type type, ASTNode node) {
+        if(type instanceof IntType) {
+            return IntType.getInstance();
+        }
+        if(type instanceof CharType) {
+            return CharType.getInstance();
+        }
         return new ErrorType(
                 node.getLine(),
                 node.getColumn(),

@@ -1,6 +1,7 @@
 import codegenerator.CodeGenerator;
 import codegenerator.ExecuteCGVisitor;
 import codegenerator.OffSetVisitor;
+import introspector.view.IntrospectorView;
 import org.antlr.v4.runtime.*;
 import introspector.model.IntrospectorModel;
 

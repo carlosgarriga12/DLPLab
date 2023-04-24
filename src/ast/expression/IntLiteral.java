@@ -17,6 +17,6 @@ public class IntLiteral extends AbstractExpression{
 
     @Override
     public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
-        return v.visit(this, null);
+        return v.visit(this, param);
     }
 }
