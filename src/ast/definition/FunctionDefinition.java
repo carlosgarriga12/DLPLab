@@ -10,7 +10,7 @@ import java.util.List;
 public class FunctionDefinition extends AbstractDefinition {
 
     public List<Statement> statements;
-    public List<VariableDefinition> parameters;
+    public List<VariableDefinition> parameters;  //TODO because of the params needed in execute template
 
     public FunctionDefinition(int line, int column, Type type, String name, List<Statement> statements) {
         super(line, column, type, name);

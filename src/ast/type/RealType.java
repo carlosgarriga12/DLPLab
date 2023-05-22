@@ -63,7 +63,7 @@ public class RealType extends AbstractType{
         return new ErrorType(
                 node.getLine(),
                 node.getColumn(),
-                String.format("Cannot perform arithmetic operation between CharType and %s", type)
+                String.format("Cannot perform arithmetic operation between RealType and %s", type)
         );
     }
 

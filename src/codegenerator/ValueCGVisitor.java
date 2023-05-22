@@ -50,7 +50,7 @@ public class ValueCGVisitor extends AbstractCGVisitor<Object, Void>{
         arithmetic.leftExpression.accept(this, param);
         cg.promotion(arithmetic.leftExpression.getType(), arithmetic.getType());
         arithmetic.rightExpression.accept(this, param);
-        cg.promotion(arithmetic.leftExpression.getType(), arithmetic.getType());
+        cg.promotion(arithmetic.rightExpression.getType(), arithmetic.getType());
 
         cg.arithmetic(arithmetic);
         return null;
@@ -208,7 +208,6 @@ public class ValueCGVisitor extends AbstractCGVisitor<Object, Void>{
      *
      * expression3*.forEach(exp -> value[[exp]])
      * <call> expression2.name
-     *
      *
      */
     @Override

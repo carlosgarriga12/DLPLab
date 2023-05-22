@@ -59,7 +59,7 @@ public class RecordType extends AbstractType{
             return new ErrorType(
                     node.getLine(),
                     node.getColumn(),
-                    String.format("Field not defined in struct"));
+                    String.format("Field " + id + " not defined in struct"));
         } else {
             return rf.type;
         }

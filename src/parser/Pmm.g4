@@ -397,11 +397,11 @@ fragment THREE_APOSTROPHE: '"""'
 ID: (LETTER |'_') (LETTER | DIGIT| '_')*
         ;
 
-ONE_LINE_COMMENT: '#' ~('\n')*? ('\n'| EOF) -> skip
+ONE_LINE_COMMENT: '#' .*? ('\n'| EOF) -> skip
                 ;
 
-MULTILINE_COMMENT: THREE_APOSTROPHE (.)*? THREE_APOSTROPHE -> skip
+MULTILINE_COMMENT: THREE_APOSTROPHE .*? THREE_APOSTROPHE -> skip
                 ;
 
-TRASH: [\n\r\t ]+ -> skip
+TRASH: (' '|'\n'|'\r'|'\t') + -> skip
     ;
