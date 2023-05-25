@@ -62,7 +62,6 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Object, Void>{
      *
      * address[[expression]]()
      *
-     * //TODO
      * <in> expression.type.suffix()
      * <store> expression.type.suffix()
      */

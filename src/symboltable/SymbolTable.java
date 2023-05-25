@@ -66,7 +66,4 @@ public class SymbolTable {
 		return def;
 	}
 
-	public int getScope(){
-		return this.scope;
-	}
 }
