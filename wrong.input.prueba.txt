@@ -3,7 +3,7 @@ character:char;
 real:double;
 
 def g(): {
-  return 2;
+  return 2;     #Error 1 cannot return with Void function
 }
 
 def main(): {

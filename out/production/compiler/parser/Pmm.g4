@@ -79,7 +79,6 @@ functionDefinition returns[Definition ast] locals [List<Statement> statements = 
                                                 $ID.text,
                                                 $statements
                                             );
-                funcDef.addParameters($parameters.ast);
                 $ast = funcDef;}
                 | START='def' ID '(' parameters ')'':'
                 '{' (varDefinition {$statements.addAll($varDefinition.ast);} )*
@@ -92,12 +91,9 @@ functionDefinition returns[Definition ast] locals [List<Statement> statements = 
                                                     $ID.text,
                                                     $statements
                                                 );
-
-                funcDef.addParameters($parameters.ast);
                 $ast = funcDef;
                 }
                 ;
-
 
 parameters returns [List<VariableDefinition> ast = new ArrayList<>()]:
         parameter {$ast.add($parameter.ast);} (',' parameter {$ast.add($parameter.ast);} )*
@@ -274,6 +270,8 @@ expression returns [Expression ast]:
                 $exp2.ast,
                 $OP.text
               );}
+
+
 
         //Comparison
         | exp1=expression OP=('<' | '<=' | '==' |'>=' | '>' | '!=') exp2=expression
