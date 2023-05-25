@@ -162,6 +162,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Object, Void>{
                 .stream()
                 .filter(statement -> !(statement instanceof VariableDefinition))
                 .collect(Collectors.toList());
+
         List<Statement> variableDefinitions = functionDefinition.statements
                 .stream()
                 .filter(statement -> statement instanceof VariableDefinition)
@@ -171,7 +172,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Object, Void>{
         cg.newLine();
         cg.label(functionDefinition.getName());
         cg.addComment(" * " + "Parameters:");
-        functionDefinition.parameters.stream().forEach(vd -> vd.accept(this, param));
+        ((FunctionType)functionDefinition.getType()).parameters.stream().forEach(vd -> vd.accept(this, param));
         cg.addComment(" * " + "Local variables:");
         variableDefinitions.forEach(statement -> statement.accept(this, param));
 

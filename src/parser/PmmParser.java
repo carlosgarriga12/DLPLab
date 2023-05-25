@@ -555,7 +555,6 @@ public class PmmParser extends Parser {
 				                                                (((FunctionDefinitionContext)_localctx).ID!=null?((FunctionDefinitionContext)_localctx).ID.getText():null),
 				                                                _localctx.statements
 				                                            );
-				                funcDef.addParameters(((FunctionDefinitionContext)_localctx).parameters.ast);
 				                ((FunctionDefinitionContext)_localctx).ast =  funcDef;
 				}
 				break;
@@ -618,8 +617,6 @@ public class PmmParser extends Parser {
 				                                                    (((FunctionDefinitionContext)_localctx).ID!=null?((FunctionDefinitionContext)_localctx).ID.getText():null),
 				                                                    _localctx.statements
 				                                                );
-
-				                funcDef.addParameters(((FunctionDefinitionContext)_localctx).parameters.ast);
 				                ((FunctionDefinitionContext)_localctx).ast =  funcDef;
 				                
 				}

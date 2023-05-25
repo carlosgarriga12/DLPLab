@@ -43,5 +43,6 @@ public class Main {
 			IntrospectorModel model=new IntrospectorModel("Program", ast);
 			new IntrospectorView("Introspector", model);
 		}
+
 	}
 }
