@@ -1,6 +1,9 @@
 package codegenerator;
 
 import ast.expression.*;
+import ast.type.FunctionType;
+import ast.type.IntType;
+import ast.type.Type;
 
 public class ValueCGVisitor extends AbstractCGVisitor<Object, Void>{
 
@@ -155,25 +158,33 @@ public class ValueCGVisitor extends AbstractCGVisitor<Object, Void>{
     /**
      * value[[Comparison: expression1 -> expression2 expression3]]() =
      *
+     * Type highestType = cg.highestType(expression2.type, expression3.type)
+     *
      * value[[expression2]]
+     * expression2.type.convertTo(highestType)
      * value[[expression3]]
+     * expression3.type.convertTo(highestType)
      *
      * switch(expression1.op) {
-     *     case "<=": <le> expression1.type.suffix() break;
-     *     case "<": <lt> expression1.type.suffix() break;
-     *     case "==" <eq> expression1.type.suffix() break;
-     *     case "!=" <ne> expression1.type.suffix()  break;
-     *     case ">": <gt> expression1.type.suffix() break;
-     *     case ">=": <ge> expression1.type.suffix() break;
+     *     case "<=": <le> highestType.suffix() break;
+     *     case "<": <lt> highestType.suffix() break;
+     *     case "==" <eq> highestType.suffix() break;
+     *     case "!=" <ne> highestType.suffix()  break;
+     *     case ">": <gt> highestType.suffix() break;
+     *     case ">=": <ge> highestType.suffix() break;
      * }
      *
      */
     @Override
     public Void visit(Comparison comparison, Object param) {
         comparison.leftExpression.accept(this, param);
+        Type highestType = cg.highestType(comparison.leftExpression.getType(), comparison.rightExpression.getType());
+        cg.promotion(comparison.leftExpression.getType(), highestType);
         comparison.rightExpression.accept(this, param);
+        cg.promotion(comparison.rightExpression.getType(), highestType);
+        cg.comparison(comparison, highestType);
 
-        cg.comparison(comparison);
+        cg.promotion(comparison.type, IntType.getInstance());
         return null;
     }
 
@@ -206,13 +217,23 @@ public class ValueCGVisitor extends AbstractCGVisitor<Object, Void>{
     /**
      * value[[Invocation: expression1 -> expression2 expression3*]]() =
      *
-     * expression3*.forEach(exp -> value[[exp]])
+     * for(int i = 0; i < expresssion3*.size() ; i++) {
+     *     value[[expression3*.get(i)]]
+     *     expression3*.get(i).type.promotesTo(expression2.type.parameters.get(i).type)
+     * }
+     *
      * <call> expression2.name
      *
      */
     @Override
     public Void visit(FunctionInvocation functionInvocation, Object param) {
-        functionInvocation.arguments.stream().forEach(expression -> expression.accept(this, param));
+
+        for(int i = 0; i < functionInvocation.arguments.size() ; i++) {
+            functionInvocation.arguments.get(i).accept(this, param);
+            cg.promotion(
+                    functionInvocation.arguments.get(i).getType(),
+                    ((FunctionType)functionInvocation.variable.type).parameters.get(i).getType());
+        }
 
         cg.call(functionInvocation.variable.name);
         return null;

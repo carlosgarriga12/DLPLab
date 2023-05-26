@@ -102,6 +102,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Object, Void>{
      *
      * address[[expression1]]
      * value[[expression2]]
+     * expression2.type.promotionTo(expresssion1.type)
      * <store> expression1.type.suffix()
      */
     @Override
@@ -110,6 +111,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Object, Void>{
         cg.addComment(" * Assignment");
         assignment.leftExpression.accept(addressCGVisitor, param);
         assignment.rightExpression.accept(valueCGVisitor, param);
+        cg.promotion(assignment.rightExpression.getType(), assignment.leftExpression.getType());
         cg.store(assignment.leftExpression.getType());
         cg.newLine();
         return null;
@@ -294,7 +296,8 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Object, Void>{
      * execute[[Return : statement -> expression]](funcDefinition) =
      *
      * value[[expression]]()
-     *
+     * cg.promotion(expression.type, funcDefinition.type.returnType)
+     * expression.type.promotion(funcDefinition.type.returnType)
      * <ret >
      *     funcDefinition.type.returnType.numberOfBytes <, >
      *     funcDefinition.byteLocalsSum <, >
@@ -303,8 +306,13 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Object, Void>{
     @Override
     public Void visit(Return aReturn, Object param) {
         cg.addComment(" * Return");
-        aReturn.expression.accept(valueCGVisitor, param);
+
         FunctionDefinition functionDefinition = (FunctionDefinition) param;
+        aReturn.expression.accept(valueCGVisitor, param);
+        cg.promotion(
+                aReturn.expression.getType(),
+                ((FunctionType)functionDefinition.getType()).returnType
+        );
 
         int bytesLocal = functionDefinition.statements
                 .stream()
@@ -318,7 +326,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Object, Void>{
                 .mapToInt(type -> type.numberOfBytes())
                 .sum();
         cg.ret(
-                aReturn.expression.getType().numberOfBytes(),
+                ((FunctionType)functionDefinition.getType()).returnType.numberOfBytes(),
                 bytesLocal,
                 byteParameters
         );

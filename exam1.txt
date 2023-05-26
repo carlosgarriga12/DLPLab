@@ -1,0 +1,24 @@
+def f(a: int, b: double) : double {
+    return a + 1;
+}
+
+def main() : {
+    real : double;
+    integer :  int;
+
+    integer = 'a';      #ASCII ('a') = 97
+    real = integer;
+
+    print real + 1,'\n',  #shows 98.0
+    'a' - integer,'\n',   #shows 0
+    real / 'a','\n',      #shows 1.0
+    'a' * 'b', '\n';       #shows 9506
+
+    print 'a' == 'a','\n';       #shows 1
+    print 'a' >= integer,'\n';   #shows 1
+    print integer <  real,'\n';  #shows 0
+    print 'a' != real + 1, '\n'; #shows 1
+
+    print f(integer, 'c'); #shows 98.0
+
+}

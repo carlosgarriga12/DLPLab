@@ -19,7 +19,9 @@ public interface Type extends ASTNode {
     void asLogical(Type type, ASTNode node);
     boolean mustBeSubtype(Type type, ASTNode node);
 
+    boolean isSubtypeOf(Type type, ASTNode node);
 
     int numberOfBytes();
     char suffix();
+
 }

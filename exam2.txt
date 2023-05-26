@@ -1,0 +1,22 @@
+def f (a: int, b: double) : int {
+    return b;      #Error
+}
+
+def main() : {
+    integer: int;
+    character: char;
+
+    pair: struct{
+        a: int;
+        b: double;
+    };
+
+    integer = 3.8;  #Error
+    character = 3;  #Error
+
+    print pair + integer, '\n'; #Error
+    print f == 3, '\n'; #Error
+
+    print f(8.4, 'c'); #Error
+
+}

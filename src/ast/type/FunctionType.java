@@ -43,18 +43,14 @@ public class FunctionType extends AbstractType{
                     )
             );
         }
-        for(int i = 0; i< parameters.size(); i++) {
-            Type type = types.get(i);
-            if(!parameters.get(i).getType().equals(type)){
+
+        for(int i = 0; i < types.size(); i++) {
+            VariableDefinition vd = parameters.get(i);
+            if(!types.get(i).isSubtypeOf(vd.getType(), node)) {
                 return new ErrorType(
                         node.getLine(),
                         node.getColumn(),
-                        String.format(
-                                "Argument type %s mismatch with parameter type %s in function invocation",
-                                types.get(i),
-                                parameters.get(i).getType()
-                        )
-                );
+                        String.format("Argument of type %s is not promotable to type %s", types.get(i), vd.getType()));
             }
         }
 

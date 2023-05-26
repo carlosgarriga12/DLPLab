@@ -2,10 +2,7 @@ package codegenerator;
 
 import ast.expression.Arithmetic;
 import ast.expression.Comparison;
-import ast.type.CharType;
-import ast.type.IntType;
-import ast.type.RealType;
-import ast.type.Type;
+import ast.type.*;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -102,7 +99,6 @@ public class CodeGenerator {
     }
 
     public void promotion(Type typeBase, Type typeToConvert) {
-
         if(typeBase.equals(IntType.getInstance())) {
             if (typeToConvert.equals(CharType.getInstance())) {
                 out.write("\ti2b" + "\n");
@@ -206,22 +202,25 @@ public class CodeGenerator {
         out.flush();
     }
 
-    public void comparison(Comparison comparison) {
+    public void comparison(Comparison comparison, Type highestType) {
         switch (comparison.operator) {
             case "<=":
-                out.write("\tle" + comparison.type.suffix() + "\n");
+                out.write("\tle" + highestType.suffix() + "\n");
                 break;
             case "<":
-                out.write("\tlt" + comparison.type.suffix() + "\n");
+                out.write("\tlt" + highestType.suffix() + "\n");
                 break;
             case "==":
-                out.write("\teq" + comparison.type.suffix() + "\n");
+                out.write("\teq" + highestType.suffix() + "\n");
                 break;
             case ">":
-                out.write("\tgt" + comparison.type.suffix() + "\n");
+                out.write("\tgt" + highestType.suffix() + "\n");
                 break;
             case ">=":
-                out.write("\tge" + comparison.type.suffix() + "\n");
+                out.write("\tge" + highestType.suffix() + "\n");
+                break;
+            case "!=":
+                out.write("\tne" + highestType.suffix() + "\n");
                 break;
         }
         out.flush();
@@ -258,5 +257,31 @@ public class CodeGenerator {
     public void writeLine(int line) {
         out.write("#line\t" + line + "\n");
         out.flush();
+    }
+
+    public Type highestType(Type type, Type otherType) {
+        if(type instanceof CharType) {
+            if(otherType instanceof IntType) {
+                return IntType.getInstance();
+            }
+            if(otherType instanceof RealType) {
+                return RealType.getInstance();
+            }
+            if(otherType instanceof CharType) {
+                return IntType.getInstance();
+            }
+        }
+        if(type instanceof IntType) {
+            if(otherType instanceof IntType) {
+                return IntType.getInstance();
+            }
+            if(otherType instanceof RealType) {
+                return RealType.getInstance();
+            }
+            if(otherType instanceof CharType) {
+                return IntType.getInstance();
+            }
+        }
+        return RealType.getInstance();
     }
 }

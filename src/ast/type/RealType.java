@@ -102,4 +102,30 @@ public class RealType extends AbstractType{
         return 'f';
     }
 
+    @Override
+    public boolean isSubtypeOf(Type type, ASTNode ast) {
+        if(type instanceof RealType) {
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public Type comparison(Type type, ASTNode astNode) {
+        if (type instanceof IntType) {
+            return IntType.getInstance();
+        }
+        if(type instanceof RealType) {
+            return IntType.getInstance();
+        }
+        if(type instanceof CharType) {
+            return IntType.getInstance();
+        }
+        return new ErrorType(
+                astNode.getLine(),
+                astNode.getColumn(),
+                String.format("Cannot perform comparison between type %s to %s type", this, type)
+        );
+    }
 }

@@ -114,6 +114,13 @@ public class IntType extends AbstractType{
         if (type.equals(this)) {
             return this;
         }
+        if (type instanceof CharType) {
+            return this;
+        }
+
+        if (type instanceof RealType) {
+            return IntType.getInstance();
+        }
         return new ErrorType(
                 astNode.getLine(),
                 astNode.getColumn(),
@@ -136,5 +143,17 @@ public class IntType extends AbstractType{
     @Override
     public Type not(ASTNode astNode) {
         return this;
+    }
+
+    @Override
+    public boolean isSubtypeOf(Type type, ASTNode ast) {
+        if(type instanceof RealType) {
+            return true;
+        }
+
+        if(type instanceof IntType) {
+            return true;
+        }
+        return false;
     }
 }

@@ -133,4 +133,14 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
         return Character.MIN_VALUE;
     }
 
+    @Override
+    public boolean isSubtypeOf(Type type, ASTNode node) {
+        new ErrorType(
+                node.getLine(),
+                node.getColumn(),
+                String.format("Cannot check if it is subtype for type %s", type)
+        );
+        return false;
+    }
+
 }
